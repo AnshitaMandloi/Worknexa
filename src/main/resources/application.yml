@@ -1,0 +1,48 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: worknexa
+  config:
+    # Reads KEY=VALUE lines from a local .env file (ignored if the file does not exist)
+    import: optional:file:./.env[.properties]
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/worknexa}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER:org.postgresql.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: ${SPRING_JPA_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
+    show-sql: false
+    open-in-view: false
+
+worknexa:
+  jwt:
+    # No default on purpose: the app refuses to start without a real secret (min 32 chars)
+    secret: ${JWT_SECRET:}
+    expiration-ms: 86400000 # 24 hours
+  cors:
+    # Comma-separated list of allowed browser origins
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:8080,http://localhost:8081}
+  seed:
+    demo-requests: ${SEED_DEMO_REQUESTS:true}
+  ai:
+    gemini:
+      api-key: ${GEMINI_API_KEY:}
+      model: ${GEMINI_MODEL:gemini-3.5-flash-lite}
+      timeout-ms: 10000
+    mock-enabled: ${AI_MOCK_ENABLED:false}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha

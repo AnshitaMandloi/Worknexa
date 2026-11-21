@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:worknexa_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: false
+    show-sql: false
+    open-in-view: false
+
+worknexa:
+  seed:
+    demo-requests: false
+  jwt:
+    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    expiration-ms: 86400000
+  ai:
+    mock-enabled: true
+    gemini:
+      api-key: ""
