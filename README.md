@@ -213,7 +213,7 @@ Swagger UI is available at: **`http://localhost:8080/swagger-ui.html`**
 
 ## 8. Configuration
 
-Settings are read from environment variables. For local development put them in a `.env` file in the project root (Spring Boot loads it automatically). **Never commit `.env`**; it is listed in `.gitignore`. Copy `.env.example` to `.env` to start.
+Settings are read from environment variables. For local development put them in a `.env` file in the project root (Spring Boot loads it automatically). **Never commit `.env`**; it is listed in `.gitignore`. Create a new file named `.env` and add the variables from the table below.
 
 | Variable | Required | Description |
 | :--- | :--- | :--- |
@@ -229,6 +229,14 @@ Settings are read from environment variables. For local development put them in 
 | `CORS_ALLOWED_ORIGINS` | No | Comma-separated list of allowed origins |
 | `PORT` | No | Default `8080` |
 
+Minimal `.env` example:
+```properties
+JWT_SECRET=replace-with-a-long-random-string-of-at-least-32-characters
+SPRING_DATASOURCE_PASSWORD=your-postgres-password
+GEMINI_API_KEY=
+AI_MOCK_ENABLED=true
+```
+
 Generate a JWT secret on Windows PowerShell:
 ```powershell
 $b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); [Convert]::ToBase64String($b)
@@ -242,7 +250,7 @@ $b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create
 Prerequisites: Java 17+, Maven, PostgreSQL.
 
 1. Create the database (pgAdmin, or `psql -U postgres`, then `CREATE DATABASE worknexa;`).
-2. Copy `.env.example` to `.env` and fill in `JWT_SECRET` and `SPRING_DATASOURCE_PASSWORD`.
+2. Create a `.env` file in the project root with at least `JWT_SECRET` and `SPRING_DATASOURCE_PASSWORD` (see the Configuration section).
 3. From the project root (where `pom.xml` is):
 ```bash
 mvn spring-boot:run
