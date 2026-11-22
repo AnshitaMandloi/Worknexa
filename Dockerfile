@@ -28,7 +28,8 @@ COPY --from=builder /workspace/target/worknexa-*.jar app.jar
 # Expose HTTP port
 EXPOSE 8080
 
-# Configure JVM memory and garbage collection defaults
-ENV JAVA_OPTS="-XX:+UseG1GC -XX:+ExitOnOutOfMemoryError -Xms256m -Xmx512m"
+# Memory-friendly defaults for small hosts (e.g. 512 MB free instances):
+# heap is capped at ~65% of the container memory, leaving room for metaspace and threads.
+ENV JAVA_OPTS="-XX:+UseSerialGC -XX:MaxRAMPercentage=65 -XX:+ExitOnOutOfMemoryError -XX:TieredStopAtLevel=1 -Xss512k"
 
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
